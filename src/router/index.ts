@@ -22,7 +22,7 @@ import MappingList from '../pages/master/MappingList.vue'
 // 下記にページを順次追加
 const routes: RouteRecordRaw[] = [
   {
-    path: '/landingpage',
+    path: '/',
     component: EmptyLayout,
     children: [
       { path: '', name: 'LandingPage', component: LandingPage }
