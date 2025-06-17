@@ -95,7 +95,6 @@ const localRecord = ref<HrRecord>({
 })
 
 watch(() => props.record, val => {
-  console.log('受け取ったrecord:', val)
   if (!val) {
     localRecord.value = {
       lastName: '', firstName: '', lastNameKana: '', firstNameKana: '', fullNameNote: '', gender: '', birthDate: '',
