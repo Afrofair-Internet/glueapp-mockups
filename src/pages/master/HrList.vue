@@ -62,7 +62,7 @@ const hrRecords = ref<HrRecord[]>([
     hireDate: '2020-04-01',
     retireDate: '',
     phoneType: '携帯',
-    phoneNumber: '090-1234-5679',
+    phoneNumber: '090-1234-5678',
     faxNumber: '',
     email: 'tanaka@example.com',
     addressType: '現住所',
