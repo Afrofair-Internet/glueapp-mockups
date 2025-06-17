@@ -126,7 +126,7 @@ watch(
   () => props.user,
   val => {
     if (props.mode === 'create'){
-      // 新規作成時は初期値空
+      // 新規作成時は初期値　空
       localUser.value = {
         id:'',
         name:'',
