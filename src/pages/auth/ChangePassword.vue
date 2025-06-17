@@ -65,7 +65,6 @@ const togglePassword = () => {
 
 const sendResetPasswordd = () => {
   // 実際はAPI呼び出しを行う処理をここに実装
-  console.log('送信された新しいパスワード:', password.value)
   // メール送信後に通知や画面遷移などを追加可能
 }
 </script>
