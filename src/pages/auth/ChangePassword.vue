@@ -43,7 +43,11 @@
             class="mb-4"
           />
 
-          <v-btn block color="primary" @click="sendResetPasswordd">変更</v-btn>
+          <v-btn block color="primary" @click="sendResetPassword">変更</v-btn>
+
+          <v-snackbar v-model="snackbar" :color="snackbarColor" timeout="3000">
+            {{ snackbarText }}
+          </v-snackbar>
 
         </v-card>
       </v-col>
@@ -53,19 +57,46 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
-const currentPassword = ref('')
-const newPassword = ref('')
-const confirmPassword = ref('')
+const currentPassword = ref<string | null>('')
+const newPassword = ref<string | null>('')
+const confirmPassword = ref<string | null>('')
 const showPassword = ref(false)
+const snackbar = ref(false)
+const snackbarText = ref('')
+const snackbarColor = ref('success')
+
+const router = useRouter()
 
 const togglePassword = () => {
   showPassword.value = !showPassword.value
 }
 
-const sendResetPasswordd = () => {
-  // 実際はAPI呼び出しを行う処理をここに実装
-  // メール送信後に通知や画面遷移などを追加可能
+const sendResetPassword = async () => {
+  try {
+    if (newPassword.value !== confirmPassword.value) {
+      snackbarText.value = '新しいパスワードが一致しません';
+      snackbarColor.value = 'error';
+      snackbar.value = true;
+      return;
+    }
+
+    // ダミーAPI呼び出し
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+
+    snackbarText.value = 'パスワードを変更しました';
+    snackbarColor.value = 'success';
+    snackbar.value = true;
+
+    setTimeout(() => {
+      router.push('/home')
+    }, 1000)
+  } catch (error) {
+    snackbarText.value = 'パスワードの変更に失敗しました';
+    snackbarColor.value = 'error';
+    snackbar.value = true;
+  }
 }
 </script>
 
