@@ -105,8 +105,8 @@ const menuItems: MenuItem[] = [
     label: '部署マスタ',
     icon: 'mdi-sitemap',
     children: [
-      { label: '部署マスタ一覧', path: '/hrlist' },
-      { label: '部署マスタ承認', path: '/hrapproval' },
+      { label: '部署マスタ一覧', path: '/deptlist' },
+      { label: '部署マスタ承認', path: '/deptapproval' },
     ]
   },
   {

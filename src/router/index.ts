@@ -11,6 +11,7 @@ import Home from '@/pages/core/Home.vue'
 import HrList from '../pages/master/HrList.vue'
 import HrApproval from '../pages/master/HrApproval.vue'
 import DeptList from '../pages/master/DeptList.vue'
+import DeptApproval from '@/pages/master/DeptApproval.vue'
 import CodeTypeList from '../pages/master/CodeTypeList.vue'
 import CodeList from '../pages/master/CodeList.vue'
 import AttendanceList from '../pages/attendance/AttendanceList.vue'
@@ -90,6 +91,13 @@ const routes: RouteRecordRaw[] = [
     component: DefaultLayout,
     children: [
       { path: '', name: 'DeptList', component: DeptList }
+    ]
+  },
+  {
+    path: '/deptapproval',
+    component: DefaultLayout,
+    children: [
+      { path: '', name: 'DeptApproval', component: DeptApproval }
     ]
   },
   {

@@ -4,7 +4,7 @@
       <v-card-title class="d-flex justify-space-between align-center">
         <span>{{ dialogTitle }}</span>
         <v-btn
-          v-if="props.record && !isEdit && !props.readonly"
+          v-if="props.record && isView && !props.readonly"
           icon
           variant="text"
           @click="enableEdit"
@@ -54,7 +54,7 @@
       <v-card-actions>
         <v-spacer />
         <v-btn @click="close">閉じる</v-btn>
-        <v-btn v-if="!isView && !props.readonly" color="primary" @click="submit" :disabled="!isValid">保存</v-btn>
+        <v-btn v-if="isEdit" color="primary" @click="submit" :disabled="!isValid">保存</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -63,18 +63,17 @@
 <script setup lang="ts">
 import { ref, watch, computed } from 'vue'
 import type { HrRecord } from '../../types/hr'
-import PrefectureSelect from '@/components/common/PrefectureSelect.vue';
+import PrefectureSelect from '@/components/common/PrefectureSelect.vue'
 
 const props = defineProps<{ modelValue: boolean; record?: HrRecord | null; readonly?: boolean }>()
 const emit = defineEmits<{ (e: 'update:modelValue', val: boolean): void; (e: 'submit', val: HrRecord): void }>()
 
-// ダイアログの表示状態
 const internalModelValue = ref(props.modelValue)
 watch(() => props.modelValue, val => (internalModelValue.value = val))
 watch(internalModelValue, val => emit('update:modelValue', val))
 
-// 編集モード切替
 const isEdit = ref(false)
+// 編集不可または編集モードでない場合は閲覧モード
 const isView = computed(() => props.readonly || !isEdit.value)
 
 const dialogTitle = computed(() => {
@@ -82,7 +81,9 @@ const dialogTitle = computed(() => {
   return isEdit.value ? '人事情報編集' : '人事情報詳細'
 })
 
-const enableEdit = () => { isEdit.value = true }
+const enableEdit = () => {
+  if (props.readonly) return
+  isEdit.value = true }
 
 const formRef = ref()
 const isValid = ref(true)
@@ -96,22 +97,22 @@ const localRecord = ref<HrRecord>({
 
 watch(() => props.record, val => {
   if (!val) {
+    isEdit.value = true
     localRecord.value = {
       lastName: '', firstName: '', lastNameKana: '', firstNameKana: '', fullNameNote: '', gender: '', birthDate: '',
       department: '', employeeId: '', employeeCode: '', employmentType: '', workStatus: '', hireDate: '', retireDate: '',
       phoneType: '', phoneNumber: '', faxNumber: '', email: '', addressType: '', zip: '', prefecture: '', city: '',
       cityKana: '', address1: '', address2: '', address1Kana: '', address2Kana: '', approvalStatus: ''
     }
-    isEdit.value = true
   } else {
     localRecord.value = JSON.parse(JSON.stringify(val))
-    isEdit.value = !props.readonly
+    isEdit.value = false
   }
 }, { immediate: true })
 
 function close() {
   internalModelValue.value = false
-  isEdit.value = !props.record
+  isEdit.value = false
 }
 
 function submit() {
