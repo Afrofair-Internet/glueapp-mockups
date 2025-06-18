@@ -53,7 +53,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import UserDialog from '@/components/user/userDialog.vue'
-import type { User } from '../../types/user'
+import type { User } from '@/types/user'
 
 const users = ref<User[]>([
   {

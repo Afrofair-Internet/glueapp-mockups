@@ -70,11 +70,11 @@
 
 <script setup lang="ts">
 import { ref, watch, computed } from 'vue'
-import type { User } from '../../types/user'
+import type { User } from '@/types/user'
 
 const props = defineProps<{
   modelValue: boolean
-  user?: User
+  user?: User | null
   mode: 'create' | 'edit' | 'view'
 }>()
 

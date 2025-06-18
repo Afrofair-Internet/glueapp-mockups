@@ -65,7 +65,7 @@ import { ref, watch, computed } from 'vue'
 import type { HrRecord } from '../../types/hr'
 import PrefectureSelect from '@/components/common/PrefectureSelect.vue';
 
-const props = defineProps<{ modelValue: boolean; record?: HrRecord; readonly?: boolean }>()
+const props = defineProps<{ modelValue: boolean; record?: HrRecord | null; readonly?: boolean }>()
 const emit = defineEmits<{ (e: 'update:modelValue', val: boolean): void; (e: 'submit', val: HrRecord): void }>()
 
 // ダイアログの表示状態
