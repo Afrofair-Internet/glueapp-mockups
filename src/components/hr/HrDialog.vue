@@ -4,7 +4,7 @@
       <v-card-title class="d-flex justify-space-between align-center">
         <span>{{ dialogTitle }}</span>
         <v-btn
-          v-if="props.record && !isEdit"
+          v-if="props.record && !isEdit && !props.readonly"
           icon
           variant="text"
           @click="enableEdit"
@@ -54,7 +54,7 @@
       <v-card-actions>
         <v-spacer />
         <v-btn @click="close">閉じる</v-btn>
-        <v-btn v-if="!isView" color="primary" @click="submit" :disabled="!isValid">保存</v-btn>
+        <v-btn v-if="!isView && !props.readonly" color="primary" @click="submit" :disabled="!isValid">保存</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -65,7 +65,7 @@ import { ref, watch, computed } from 'vue'
 import type { HrRecord } from '../../types/hr'
 import PrefectureSelect from '@/components/common/PrefectureSelect.vue';
 
-const props = defineProps<{ modelValue: boolean; record?: HrRecord }>()
+const props = defineProps<{ modelValue: boolean; record?: HrRecord; readonly?: boolean }>()
 const emit = defineEmits<{ (e: 'update:modelValue', val: boolean): void; (e: 'submit', val: HrRecord): void }>()
 
 // ダイアログの表示状態
@@ -75,7 +75,7 @@ watch(internalModelValue, val => emit('update:modelValue', val))
 
 // 編集モード切替
 const isEdit = ref(false)
-const isView = computed(() => !isEdit.value)
+const isView = computed(() => props.readonly || !isEdit.value)
 
 const dialogTitle = computed(() => {
   if (!props.record) return '人事情報登録'
@@ -105,6 +105,7 @@ watch(() => props.record, val => {
     isEdit.value = true
   } else {
     localRecord.value = JSON.parse(JSON.stringify(val))
+    isEdit.value = !props.readonly
   }
 }, { immediate: true })
 

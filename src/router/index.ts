@@ -9,6 +9,7 @@ import ResetPassword from '@/pages/auth/ResetPassword.vue'
 import EntryForm from '@/pages/application/EntryForm.vue'
 import Home from '@/pages/core/Home.vue'
 import HrList from '../pages/master/HrList.vue'
+import HrApproval from '../pages/master/HrApproval.vue'
 import DeptList from '../pages/master/DeptList.vue'
 import CodeTypeList from '../pages/master/CodeTypeList.vue'
 import CodeList from '../pages/master/CodeList.vue'
@@ -75,6 +76,13 @@ const routes: RouteRecordRaw[] = [
     component: DefaultLayout,
     children: [
       { path: '', name: 'HrList', component: HrList }
+    ]
+  },
+  {
+    path: '/hrapproval',
+    component: DefaultLayout,
+    children: [
+      { path: '', name: 'HrApproval', component: HrApproval }
     ]
   },
   {
