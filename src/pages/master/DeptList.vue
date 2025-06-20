@@ -3,7 +3,7 @@
     <v-card class="pa-4">
       <v-text-field
         v-model="search"
-        label="部署検索（部署名・CD・所在地・責任者など）"
+        label="部署検索（部署名・CD・種別など）"
         prepend-inner-icon="mdi-magnify"
         class="mb-4"
         clearable
@@ -44,30 +44,58 @@ import type { DeptRecord } from '@/types/dept'
 import { useDeptRecords } from '@/composables/useDeptRecords'
 
 const search = ref('')
-
 const { deptRecords } = useDeptRecords()
+
+const departmentMap = computed(() => {
+  const map = new Map<string, string>()
+  deptRecords.value.forEach(dept => {
+    map.set(dept.departmentCode, dept.departmentName)
+  })
+  return map
+})
+
+const departmentTypeOptions = [
+  { value: 'headquarters', label: '本部' },
+  { value: 'division', label: '事業部' },
+  { value: 'department', label: '部' },
+  { value: 'section', label: '課' },
+  { value: 'group', label: 'グループ' },
+  { value: 'project', label: 'プロジェクト' }
+]
+
+const departmentTypeLabelMap = computed(() => {
+  const map = new Map<string, string>()
+  departmentTypeOptions.forEach(opt => {
+    map.set(opt.value, opt.label)
+  })
+  return map
+})
 
 const headers = [
   { title: 'No', value: 'index', sortable: false },
-  { title: '承認ステータス', value: 'approvalStatus', sortable: false },
+  { title: '承認ステータス', value: 'approvalStatus' },
   { title: '運営状態', value: 'operationStatus' },
-  { title: '部署CD', value: 'departmentCode' },
+  { title: '部署コード', value: 'departmentCode' },
   { title: '部署名', value: 'departmentName' },
-  { title: '所在地', value: 'location' },
-  { title: '責任者', value: 'manager' },
-  { title: '郵便番号', value: 'zip' },
-  { title: '住所', value: 'address' },
+  { title: '親部署', value: 'parentDepartment' },
+  { title: '部署種別', value: 'departmentTypeLabel' },
+  { title: '設置日', value: 'installedAt' },
+  { title: '廃止日', value: 'abolishedAt' },
   { title: '詳細', value: 'actions', sortable: false }
 ]
 
 type DepartmentDisplayRecord = DeptRecord & {
   index: number
+  parentDepartment: string
+  departmentTypeLabel: string
 }
 
 const displayDepartments = computed<DepartmentDisplayRecord[]>(() =>
   deptRecords.value.map((r, i) => ({
     ...r,
-    index: i + 1
+    index: i + 1,
+    parentDepartment: departmentMap.value.get(r.parentDepartment) || '',
+    departmentTypeLabel: departmentTypeLabelMap.value.get(r.departmentType) || ''
   }))
 )
 
@@ -78,8 +106,7 @@ const filteredDepartments = computed(() => {
     return (
       r.departmentCode?.toLowerCase().includes(keyword) ||
       r.departmentName?.toLowerCase().includes(keyword) ||
-      r.location?.toLowerCase().includes(keyword) ||
-      r.manager?.toLowerCase().includes(keyword)
+      r.departmentTypeLabel?.toLowerCase().includes(keyword)
     )
   })
 })

@@ -30,8 +30,44 @@
               <v-text-field v-model="localRecord.departmentName" label="部署名" :readonly="isView" required />
             </v-col>
 
-            <v-col cols="12">
-              <v-text-field v-model="localRecord.departmentKana" label="部署名カナ" :readonly="isView" />
+            <v-col cols="6">
+              <v-select
+                v-model="localRecord.parentDepartment"
+                :items="parentDepartment"
+                label="親部署"
+                :readonly="isView"
+                item-title="label"
+                item-value="value"
+              />
+            </v-col>
+
+            <v-col cols="6">
+              <v-select
+                v-model="localRecord.departmentType"
+                :items="departmentTypeOptions"
+                label="部署種別"
+                :readonly="isView"
+                item-title="label"
+                item-value="value"
+              />
+            </v-col>
+
+            <v-col cols="6">
+              <v-text-field
+                v-model="localRecord.installedAt"
+                label="設置日"
+                type="date"
+                :readonly="isView"
+              />
+            </v-col>
+
+            <v-col cols="6">
+              <v-text-field
+                v-model="localRecord.abolishedAt"
+                label="廃止日"
+                type="date"
+                :readonly="isView"
+              />
             </v-col>
 
             <v-col cols="12">
@@ -90,10 +126,36 @@ const enableEdit = () => { isEdit.value = true }
 const formRef = ref()
 const isValid = ref(true)
 
+const parentDepartment = [
+  { value: '', label: '親部署なし' },
+  { value: '1000', label: '営業部' },
+  { value: '1010', label: '営業第一課' },
+  { value: '2000', label: '開発部' },
+  { value: '2010', label: '開発グループ' },
+  { value: '3000', label: '管理部' },
+  { value: '4000', label: '経営本部' },
+  { value: '5000', label: 'プロジェクト推進チーム' },
+]
+
+const departmentTypeOptions = [
+  { value: 'headquarters', label: '本部' },
+  { value: 'division', label: '事業部' },
+  { value: 'department', label: '部' },
+  { value: 'section', label: '課' },
+  { value: 'group', label: 'グループ' },
+  { value: 'project', label: 'プロジェクト' }
+]
+
+const today = () => new Date().toISOString().substring(0, 10)
+
 const localRecord = ref<DeptRecord>({
   departmentCode: '',
   departmentName: '',
   departmentKana: '',
+  parentDepartment: '',
+  departmentType: '',
+  installedAt: today(),
+  abolishedAt: '',
   location: '',
   manager: '',
   zip: '',
@@ -103,6 +165,7 @@ const localRecord = ref<DeptRecord>({
   approvalStatus: '申請中'
 })
 
+
 watch(() => props.record, val => {
   if (!val) {
     isEdit.value = true
@@ -110,6 +173,10 @@ watch(() => props.record, val => {
       departmentCode: '',
       departmentName: '',
       departmentKana: '',
+      parentDepartment: '',
+      departmentType: '',
+      installedAt: today(),
+      abolishedAt: '',
       location: '',
       manager: '',
       zip: '',
