@@ -66,6 +66,7 @@ const headers = [
   { title: '部署CD', value: 'departmentCode' },
   { title: '部署名', value: 'departmentName' },
   { title: '責任者', value: 'manager' },
+  { title: '親部署コード', value: 'parentDepartment' },
   { title: '所在地', value: 'location' },
   { title: '承認ステータス', value: 'approvalStatus' },
   { title: '', value: 'actions', sortable: false }

@@ -20,7 +20,7 @@
               <v-select v-model="localRecord.operationStatus" label="運営状態" :items="['運営中', '休止']" :readonly="isView" />
             </v-col>
             <v-col cols="6">
-              <v-select v-model="localRecord.approvalStatus" label="承認ステータス" :items="['申請中', '承認済み']" :readonly="isView" />
+              <v-text-field v-model="localRecord.approvalStatus" label="承認ステータス" readonly />
             </v-col>
 
             <v-col cols="6">
