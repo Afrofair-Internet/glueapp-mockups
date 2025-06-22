@@ -8,18 +8,20 @@ import Login from '@/pages/auth/Login.vue'
 import ResetPassword from '@/pages/auth/ResetPassword.vue'
 import EntryForm from '@/pages/application/EntryForm.vue'
 import Home from '@/pages/core/Home.vue'
-import HrList from '../pages/master/HrList.vue'
-import HrApproval from '../pages/master/HrApproval.vue'
-import DeptList from '../pages/master/DeptList.vue'
-import DeptApproval from '@/pages/master/DeptApproval.vue'
-import CodeTypeList from '../pages/master/CodeTypeList.vue'
-import CodeList from '../pages/master/CodeList.vue'
-import AttendanceList from '../pages/attendance/AttendanceList.vue'
-import ExpenseList from '../pages/expense/ExpenseList.vue'
-import SaasSelection from '../pages/auth/SaasSelection.vue'
-import ChangePassword from '../pages/auth/ChangePassword.vue'
-import UserList from '../pages/user/UserList.vue'
-import MappingList from '../pages/master/MappingList.vue'
+import HrList from '@/pages/hr/HrList.vue'
+import HrApproval from '@/pages/hr/HrApproval.vue'
+import DeptList from '@/pages/dept/DeptList.vue'
+import DeptApproval from '@/pages/dept/DeptApproval.vue'
+import SyncHistory from '@/pages/sync/SyncHistory.vue'
+import ReconcileDiff from '@/pages/sync/ReconcileDiff.vue'
+import CodeTypeList from '@/pages/master/CodeTypeList.vue'
+import CodeList from '@/pages/master/CodeList.vue'
+import AttendanceList from '@/pages/attendance/AttendanceList.vue'
+import ExpenseList from '@/pages/expense/ExpenseList.vue'
+import SaasSelection from '@/pages/auth/SaasSelection.vue'
+import ChangePassword from '@/pages/auth/ChangePassword.vue'
+import UserList from '@/pages/user/UserList.vue'
+import MappingList from '@/pages/master/MappingList.vue'
 
 // 下記にページを順次追加
 const routes: RouteRecordRaw[] = [
@@ -73,31 +75,27 @@ const routes: RouteRecordRaw[] = [
     ]
   },
   {
-    path: '/hrlist',
+    path: '/hr',
     component: DefaultLayout,
     children: [
-      { path: '', name: 'HrList', component: HrList }
+      { path: 'list', name: 'HrList', component: HrList },
+      { path: 'approval', name: 'HrApproval', component: HrApproval }
     ]
   },
   {
-    path: '/hrapproval',
+    path: '/dept',
     component: DefaultLayout,
     children: [
-      { path: '', name: 'HrApproval', component: HrApproval }
+      { path: 'list', name: 'DeptList', component: DeptList },
+      { path: 'approval', name: 'DeptApproval', component: DeptApproval }
     ]
   },
   {
-    path: '/deptlist',
+    path: '/sync',
     component: DefaultLayout,
     children: [
-      { path: '', name: 'DeptList', component: DeptList }
-    ]
-  },
-  {
-    path: '/deptapproval',
-    component: DefaultLayout,
-    children: [
-      { path: '', name: 'DeptApproval', component: DeptApproval }
+      { path: 'history', name: 'SyncHistory', component: SyncHistory },
+      { path: 'diff/:serviceId', name: 'ReconcileDiff', component: ReconcileDiff }
     ]
   },
   {

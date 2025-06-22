@@ -29,10 +29,10 @@
           item-value="employeeId"
           show-select
           v-model="selected"
-          class="elevation-1"
+          class="elevation"
         >
           <template #item.actions="{ item }">
-            <v-btn variant="text" @click="openDialog(item)">
+            <v-btn icon variant="text" @click="openDialog(item)">
               <v-icon>mdi-information</v-icon>
             </v-btn>
           </template>
@@ -71,7 +71,7 @@ const headers = [
   { title: '従業員区分', value: 'employmentType' },
   { title: '入社年月日', value: 'hireDate' },
   { title: 'ステータス', value: 'approvalStatus' },
-  { title: '', value: 'actions', sortable: false },
+  { title: '詳細', value: 'actions', sortable: false },
 ]
 
 const selected = ref<string[]>([])

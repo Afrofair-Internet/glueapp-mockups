@@ -6,65 +6,85 @@
     permanent
     color="#f5f5f5"
   >
-    <v-list nav dense>
-
+    <v-list nav density="compact">
       <!-- ユーザー情報 -->
-      <v-list-item class="pa-3">
-        <v-list-item-content>
-          <v-item-title class="text-subtitle-1 font-weight-bold">愚龍 亜伏</v-item-title>
-          <v-list-item-subtitle>glue@afrofair.jp</v-list-item-subtitle>
-        </v-list-item-content>
-      </v-list-item>
+      <v-list-item
+        class="pa-3"
+        title="愚龍 亜伏"
+        subtitle="glue@afrofair.jp"
+      />
 
       <!-- アカウント操作 -->
-      <v-list-item @click="navigate('/login')">
-        <v-list-item-icon><v-icon>mdi-logout</v-icon></v-list-item-icon>
-        <v-list-item-title>ログアウト</v-list-item-title>
-      </v-list-item>
-      <v-list-item @click="navigate('/changepassword')">
-        <v-list-item-icon><v-icon>mdi-lock-reset</v-icon></v-list-item-icon>
-        <v-list-item-title>パスワード変更</v-list-item-title>
-      </v-list-item>
+      <v-list-item
+        @click="navigate('/login')"
+        prepend-icon="mdi-logout"
+        title="ログアウト"
+      />
+      <v-list-item
+        @click="navigate('/changepassword')"
+        prepend-icon="mdi-lock-reset"
+        title="パスワード変更"
+      />
 
       <v-divider class="my-2" />
 
       <!-- メニュー項目 -->
       <template v-for="item in menuItems" :key="item.label">
-        <!-- サブメニューあり（開閉あり） -->
+        <!-- サブメニューあり -->
         <v-list-group
           v-if="item.children"
           v-model:opened="opened[item.label]"
           no-action
         >
           <template #activator="{ props }">
-            <v-list-item v-bind="props">
-              <v-list-item-icon class="mr-3">
-                <v-icon>{{ item.icon }}</v-icon>
-              </v-list-item-icon>
-              <v-list-item-title>{{ item.label }}</v-list-item-title>
-            </v-list-item>
+            <v-list-item
+              v-bind="props"
+              :title="item.label"
+              :prepend-icon="item.icon"
+            />
           </template>
-
           <v-list-item
             v-for="child in item.children"
             :key="child.path"
             @click="navigate(child.path)"
+            :title="child.label"
             class="pl-8"
-          >
-            <v-list-item-title>{{ child.label }}</v-list-item-title>
-          </v-list-item>
+          />
         </v-list-group>
 
-        <!-- 通常メニュー -->
+        <!-- 単独メニュー -->
         <v-list-item
           v-else
           @click="navigate(item.path!)"
-        >
-          <v-list-item-icon class="mr-3"><v-icon>{{ item.icon }}</v-icon></v-list-item-icon>
-          <v-list-item-title>{{ item.label }}</v-list-item-title>
-        </v-list-item>
+          :title="item.label"
+          :prepend-icon="item.icon"
+        />
       </template>
+    </v-list>
 
+    <!-- 設定 -->
+    <v-list nav dense class="mt-auto">
+      <v-divider class="mb-2" />
+      <v-list-group
+        v-model:opened="opened['設定']"
+        no-action
+      >
+        <template #activator="{ props }">
+          <v-list-item
+            v-bind="props"
+            title="設定"
+            prepend-icon="mdi-cog"
+          />
+        </template>
+
+        <v-list-item
+          v-for="item in settingItems"
+          :key="item.path"
+          @click="navigate(item.path)"
+          :title="item.label"
+          class="pl-8"
+        />
+      </v-list-group>
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -82,7 +102,6 @@ const navigate = (path: string) => {
   emit('update:drawer', false)
 }
 
-// 構造化されたメニュー
 type MenuItem = {
   label: string
   icon: string
@@ -97,35 +116,30 @@ const menuItems: MenuItem[] = [
     label: '人事マスタ',
     icon: 'mdi-account-tie',
     children: [
-      { label: '人事マスタ一覧', path: '/hrlist' },
-      { label: '人事マスタ承認', path: '/hrapproval' },
+      { label: '人事マスタ一覧', path: '/hr/list' },
+      { label: '人事マスタ承認', path: '/hr/approval' },
     ]
   },
   {
     label: '部署マスタ',
     icon: 'mdi-sitemap',
     children: [
-      { label: '部署マスタ一覧', path: '/deptlist' },
-      { label: '部署マスタ承認', path: '/deptapproval' },
+      { label: '部署マスタ一覧', path: '/dept/list' },
+      { label: '部署マスタ承認', path: '/dept/approval' },
     ]
   },
-  {
-    label: 'マスタ管理',
-    icon: 'mdi-format-list-bulleted-type',
-    children: [
-      { label: 'コード区分マスタ', path: '/codetypelist' },
-      { label: 'コードマスタ', path: '/codelist' },
-    ]
-  },
-  { path: '/mappinglist', label: 'マッピング管理', icon: 'mdi-link-variant' },
   { path: '/attendancelist', label: '勤怠管理', icon: 'mdi-clock-outline' },
-  { path: '/expenselist', label: '経費精算管理', icon: 'mdi-wallet' },
-  { path: '/saasselection', label: 'SAAS選択', icon: 'mdi-cloud-outline' },
+  { path: '/expenselist', label: '経費精算管理', icon: 'mdi-wallet' }
 ]
 
-// 開閉状態を項目ごとに管理
+const settingItems = [
+  { label: 'コード区分マスタ', path: '/codetypelist' },
+  { label: 'コードマスタ', path: '/codelist' },
+  { label: 'マッピング管理', path: '/mappinglist' },
+  { label: 'SAAS選択', path: '/saasselection' },
+]
+
 const opened = ref<Record<string, boolean>>(
   Object.fromEntries(menuItems.filter(i => i.children).map(i => [i.label, false]))
 )
-
 </script>

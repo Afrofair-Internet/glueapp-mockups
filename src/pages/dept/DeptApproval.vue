@@ -32,7 +32,7 @@
           class="elevation-1"
         >
           <template #item.actions="{ item }">
-            <v-btn variant="text" @click="openDialog(item)">
+            <v-btn icon variant="text" @click="openDialog(item)">
               <v-icon>mdi-information</v-icon>
             </v-btn>
           </template>
@@ -69,7 +69,7 @@ const headers = [
   { title: '親部署コード', value: 'parentDepartment' },
   { title: '所在地', value: 'location' },
   { title: '承認ステータス', value: 'approvalStatus' },
-  { title: '', value: 'actions', sortable: false }
+  { title: '詳細', value: 'actions', sortable: false }
 ]
 
 const selected = ref<string[]>([])
