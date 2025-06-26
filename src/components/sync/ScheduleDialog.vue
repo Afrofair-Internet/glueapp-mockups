@@ -1,13 +1,7 @@
 <template>
-  <v-dialog v-model="dialog" max-width="600">
-    <template #activator="{ props }">
-      <v-btn v-bind="props" color="primary" prepend-icon="mdi-calendar-clock">
-        同期スケジュール設定
-      </v-btn>
-    </template>
-
+  <v-dialog v-model="dialog" max-width="600" transition="dialog-bottom-transition">
     <v-card>
-      <v-card-title class="text-h6">定期的な同期スケジュール</v-card-title>
+      <v-card-title class="text-h6">自動突合スケジュール</v-card-title>
       <v-card-text>
         <v-select
           label="間隔の設定"
@@ -84,9 +78,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
-const dialog = ref(false)
+// 親からv-model経由で受け取る
+const props = defineProps<{ modelValue: boolean }>()
+const emit = defineEmits<{
+  (e: 'update:modelValue', value: boolean): void
+}>()
+
+// computedでv-modelと同期させる
+const dialog = computed({
+  get: () => props.modelValue,
+  set: (val: boolean) => emit('update:modelValue', val),
+})
+
 const intervalType = ref('日毎')
 const dailyInterval = ref('1日毎')
 const weeklyInterval = ref('1週間毎')

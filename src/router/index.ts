@@ -12,13 +12,13 @@ import HrList from '@/pages/hr/HrList.vue'
 import HrApproval from '@/pages/hr/HrApproval.vue'
 import DeptList from '@/pages/dept/DeptList.vue'
 import DeptApproval from '@/pages/dept/DeptApproval.vue'
+import ReconcileHistory from '@/pages/sync/ReconcileHistory.vue'
 import SyncHistory from '@/pages/sync/SyncHistory.vue'
 import ReconcileDiff from '@/pages/sync/ReconcileDiff.vue'
 import CodeTypeList from '@/pages/master/CodeTypeList.vue'
 import CodeList from '@/pages/master/CodeList.vue'
 import AttendanceList from '@/pages/attendance/AttendanceList.vue'
 import ExpenseList from '@/pages/expense/ExpenseList.vue'
-import SaasSelection from '@/pages/auth/SaasSelection.vue'
 import ChangePassword from '@/pages/auth/ChangePassword.vue'
 import UserList from '@/pages/user/UserList.vue'
 import MappingList from '@/pages/master/MappingList.vue'
@@ -94,7 +94,8 @@ const routes: RouteRecordRaw[] = [
     path: '/sync',
     component: DefaultLayout,
     children: [
-      { path: 'history', name: 'SyncHistory', component: SyncHistory },
+      { path: 'reconcile-history', name: 'ReconcileHistory', component: ReconcileHistory },
+      { path: 'sync-history', name: 'SyncHistory', component: SyncHistory },
       { path: 'diff/:serviceId', name: 'ReconcileDiff', component: ReconcileDiff }
     ]
   },
@@ -131,13 +132,6 @@ const routes: RouteRecordRaw[] = [
     component: DefaultLayout,
     children: [
       { path: '', name: 'ExpenseList', component: ExpenseList }
-    ]
-  },
-  {
-    path: '/saasselection',
-    component: DefaultLayout,
-    children: [
-      { path: '', name: 'SaasSelection', component: SaasSelection }
     ]
   },
 ]

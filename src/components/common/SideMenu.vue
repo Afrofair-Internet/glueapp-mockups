@@ -79,8 +79,8 @@
 
         <v-list-item
           v-for="item in settingItems"
-          :key="item.path"
-          @click="navigate(item.path)"
+          :key="item.path || item.label"
+          @click="item.action ? item.action() : navigate(item.path)"
           :title="item.label"
           class="pl-8"
         />
@@ -92,6 +92,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { inject } from 'vue'
 
 const { drawer } = defineProps<{ drawer: boolean }>()
 const emit = defineEmits<{ (e: 'update:drawer', value: boolean): void }>()
@@ -101,6 +102,8 @@ const navigate = (path: string) => {
   router.push(path)
   emit('update:drawer', false)
 }
+
+const openScheduleDialog = inject<() => void>('openScheduleDialog')
 
 type MenuItem = {
   label: string
@@ -136,7 +139,7 @@ const settingItems = [
   { label: 'コード区分マスタ', path: '/codetypelist' },
   { label: 'コードマスタ', path: '/codelist' },
   { label: 'マッピング管理', path: '/mappinglist' },
-  { label: 'SAAS選択', path: '/saasselection' },
+  { label: '自動突合スケジュール', action: () => openScheduleDialog?.() },
 ]
 
 const opened = ref<Record<string, boolean>>(

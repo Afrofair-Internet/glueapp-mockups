@@ -8,15 +8,14 @@
         <v-row class="align-center" dense>
           <v-col cols="auto">
             <v-btn
-              color="primary"
-              variant="flat"
-              prepend-icon="mdi-sync"
-              @click="syncAll"
-              :loading="isSyncingAll"
+              variant="outlined"
+              color="secondary"
+              prepend-icon="mdi-history"
+              @click="goToReconcileHistory"
               elevation="1"
               rounded
             >
-              一括同期
+              突合履歴
             </v-btn>
           </v-col>
 
@@ -25,7 +24,7 @@
               variant="outlined"
               color="secondary"
               prepend-icon="mdi-history"
-              @click="goToHistory"
+              @click="goToSyncHistory"
               elevation="1"
               rounded
             >
@@ -33,9 +32,6 @@
             </v-btn>
           </v-col>
 
-          <v-col cols="auto">
-            <ScheduleDialog />
-          </v-col>
         </v-row>
       </v-col>
     </v-row>
@@ -44,10 +40,11 @@
     <h2 class="text-subtitle-1 font-weight-bold mb-2">人事マスタ同期状況</h2>
     <v-row>
       <v-col cols="12" md="4" v-for="item in masterServices" :key="item.id">
-        <SyncCard
+        <MasterSyncCard
           :service="item"
           @view-diff="viewDiff"
           @reconcile="reconcile"
+          @sync="sync"
         />
       </v-col>
     </v-row>
@@ -56,10 +53,15 @@
     <h2 class="text-subtitle-1 font-weight-bold mt-6 mb-2">トランザクション同期状況</h2>
     <v-row>
       <v-col cols="12" md="4" v-for="item in transactionServices" :key="item.id">
-        <SyncCard
+        <TransactionSyncCard
           :service="item"
           @view-diff="viewDiff"
           @reconcile="reconcile"
+          @sync="sync"
+          @month-change="handleMonthChange"
+          @fetch="fetchTransactionData"
+          @confirm="confirm"
+          @approve="approve"
         />
       </v-col>
     </v-row>
@@ -67,89 +69,54 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import SyncCard from '@/components/sync/SyncCard.vue'
-import ScheduleDialog from '@/components/sync/ScheduleDialog.vue'
-import axios from 'axios'
+import MasterSyncCard from '@/components/sync/MasterSyncCard.vue'
+import TransactionSyncCard from '@/components/sync/TransactionSyncCard.vue'
+import { useMasterServices } from '@/composables/useMasterServices'
+import { useTransactionServices } from '@/composables/useTransactionServices'
 
-const isSyncingAll = ref(false)
-
-const syncAll = async () => {
-  isSyncingAll.value = true
-  try {
-    await axios.post('/api/sync/all')
-    console.log('一括同期成功')
-  } catch (err) {
-    console.error('一括同期失敗:', err)
-  } finally {
-    isSyncingAll.value = false
-  }
+const goToReconcileHistory = () => {
+  router.push({ name: 'ReconcileHistory' })
 }
 
-const goToHistory = () => {
+const goToSyncHistory = () => {
   router.push({ name: 'SyncHistory' })
 }
 
-type SyncStatus = 'success' | 'error' | 'not_synced'
-
-interface Service {
-  id: string
-  label: string
-  syncStatus: SyncStatus
-  lastSynced: string | null
-  reconcileDiffCount: number
-  errorMessage?: string
+const sync = (id: string) => {
+  console.log('同期:', id)
+  // ここに同期処理を実装する
 }
 
-const masterServices = ref<Service[]>([
-  {
-    id: 'jinjer_hr',
-    label: 'jinjer：人事マスタ',
-    syncStatus: 'success',
-    lastSynced: '2025-06-22 05:00',
-    reconcileDiffCount: 2,
-  },
-  {
-    id: 'jobcan_hr',
-    label: 'ジョブカン：人事マスタ',
-    syncStatus: 'error',
-    lastSynced: null,
-    reconcileDiffCount: 0,
-    errorMessage: 'API認証エラー',
-  },
-  {
-    id: 'office_hr',
-    label: 'オフィスステーション：人事マスタ',
-    syncStatus: 'success',
-    lastSynced: '2025-06-22 06:30',
-    reconcileDiffCount: 0,
-  },
-])
-
-const transactionServices = ref<Service[]>([
-  {
-    id: 'jinjer_attendance',
-    label: 'jinjer：勤怠データ',
-    syncStatus: 'success',
-    lastSynced: '2025-06-22 06:00',
-    reconcileDiffCount: 3,
-  },
-  {
-    id: 'jobcan_expense',
-    label: 'ジョブカン：経費データ',
-    syncStatus: 'error',
-    lastSynced: null,
-    reconcileDiffCount: 0,
-    errorMessage: '通信エラー',
-  },
-])
+const { masterServices } = useMasterServices()
+const { transactionServices } = useTransactionServices()
+console.log('transactionServices', transactionServices.value)
 
 const router = useRouter()
+
+// 再突合
 const reconcile = (id: string) => {
   console.log('再突合:', id)
 }
+// 差分確認
 const viewDiff = (id: string) => {
   router.push({ name: 'ReconcileDiff', params: { serviceId: id } })
+}
+// 対象月度変更
+const handleMonthChange = (id: string, month: string) => {
+  console.log(`月度変更：${id} → ${month}`)
+}
+// 取得
+const fetchTransactionData = (id: string, month: string) => {
+  console.log(`データ取得: サービスID=${id}, 月=${month}`)
+  // 実際の API 呼び出しや状態更新処理
+}
+// 取得内容確認
+const confirm = (id: string) => {
+  console.log('確認:', id)
+}
+// 承認
+const approve = (id: string) => {
+  console.log('承認:', id)
 }
 </script>

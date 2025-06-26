@@ -17,7 +17,10 @@
         <template #top>
           <div class="d-flex justify-space-between align-center mb-4">
             <h2 class="text-h6 font-weight-bold">人事マスタ一覧</h2>
-            <v-btn color="primary" @click="onRegister">新規登録</v-btn>
+            <div>
+              <v-btn color="primary" @click="onRegister">新規登録</v-btn>
+              <v-btn color="primary" class="ml-2" @click="onSend">送信</v-btn>
+            </div>
           </div>
         </template>
 
@@ -99,6 +102,25 @@ function onRegister() {
   selectedRecord.value = undefined
   dialogMode.value = 'create'
   showDialog.value = true
+}
+
+const loading = ref(false)
+
+const onSend = async () => {
+  loading.value = true
+  try {
+    console.log('【送信】同期・突合 開始');
+
+    // バックエンド開発時に追加される処理
+    // await syncWithSaaS();
+    // await reconcileData();
+
+    console.log('【送信】完了');
+  } catch (e) {
+    console.error('【送信】エラー', e);
+  } finally {
+    loading.value = false
+  }
 }
 
 function showDetail(record: HrRecord) {

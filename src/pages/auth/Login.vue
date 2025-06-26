@@ -1,17 +1,23 @@
 <template>
   <v-container class="login-wrapper" fluid>
     <v-row align="center" justify="center" class="full-height">
-      <v-col cols="12" sm="8" md="6" lg="4" class="d-flex justify-center">
+      <v-col cols="12" sm="8" md="4" lg="3">
         <v-card class="login-card" elevation="3" rounded="xl">
           <div class="text-center mb-6">
             <h1 class="text-h4 font-weight-bold">GlueApp</h1>
           </div>
+          <v-text-field
+            v-model="contractId"
+            label="契約ID"
+            outlined
+            prepend-inner-icon="mdi-tag"
+            class="mb-3"
+          />
 
           <v-text-field
             v-model="loginId"
             label="ログインID"
             outlined
-            dense
             prepend-inner-icon="mdi-account"
             class="mb-3"
           />
@@ -21,7 +27,7 @@
             :type="showPassword ? 'text' : 'password'"
             label="パスワード"
             outlined
-            dense
+            prepend-inner-icon="mdi-lock"
             :append-inner-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
             @click:append-inner="togglePassword"
             class="mb-3"
@@ -41,6 +47,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 
+const contractId = ref('')
 const loginId = ref('')
 const password = ref('')
 const showPassword = ref(false)
@@ -65,12 +72,8 @@ a {
 }
 
 .login-card {
-  width: 400px;
-  height: 400px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   padding: 40px;
+  flex-direction: column;
   box-sizing: border-box;
 }
 </style>
