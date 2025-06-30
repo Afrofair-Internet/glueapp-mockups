@@ -20,7 +20,7 @@
               <v-select v-model="localRecord.operationStatus" label="運営状態" :items="['運営中', '休止']" :readonly="isView" />
             </v-col>
             <v-col cols="6">
-              <v-text-field v-model="localRecord.approvalStatus" label="承認ステータス" readonly />
+              <v-text-field v-model="localRecord.status" label="承認ステータス" readonly />
             </v-col>
 
             <v-col cols="6">
@@ -162,7 +162,7 @@ const localRecord = ref<DeptRecord>({
   address: '',
   remarks: '',
   operationStatus: '運営中',
-  approvalStatus: '申請中'
+  status: '申請中'
 })
 
 
@@ -183,7 +183,7 @@ watch(() => props.record, val => {
       address: '',
       remarks: '',
       operationStatus: '運営中',
-      approvalStatus: '申請中'
+      status: '申請中'
     }
   } else {
     localRecord.value = JSON.parse(JSON.stringify(val))

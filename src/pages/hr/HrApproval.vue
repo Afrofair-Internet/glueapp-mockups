@@ -70,7 +70,7 @@ const headers = [
   { title: '部署', value: 'department' },
   { title: '従業員区分', value: 'employmentType' },
   { title: '入社年月日', value: 'hireDate' },
-  { title: 'ステータス', value: 'approvalStatus' },
+  { title: 'ステータス', value: 'status' },
   { title: '詳細', value: 'actions', sortable: false },
 ]
 
@@ -81,7 +81,7 @@ const selectedDetail = ref<HrRecord | null>(null)
 const filteredRows = computed(() => {
   return hrRecords.value.filter(row => {
     return (
-      row.approvalStatus === '申請中' &&
+      row.status === '申請中' &&
       (!filters.value.employeeCode || row.employeeCode.includes(filters.value.employeeCode)) &&
       (!filters.value.employeeName || `${row.lastName}${row.firstName}`.includes(filters.value.employeeName)) &&
       (!filters.value.department || row.department.includes(filters.value.department))
@@ -94,7 +94,7 @@ const filteredRows = computed(() => {
 
 function updateStatus(status: string) {
   hrRecords.value = hrRecords.value.map(row =>
-    selected.value.includes(row.employeeId) ? { ...row, approvalStatus: status } : row
+    selected.value.includes(row.employeeId) ? { ...row, status: status } : row
   )
   selected.value = []
 }

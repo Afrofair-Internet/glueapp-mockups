@@ -18,7 +18,9 @@ import ReconcileDiff from '@/pages/sync/ReconcileDiff.vue'
 import CodeTypeList from '@/pages/master/CodeTypeList.vue'
 import CodeList from '@/pages/master/CodeList.vue'
 import AttendanceList from '@/pages/attendance/AttendanceList.vue'
+import AttendanceDetail from '@/pages/attendance/AttendanceDetail.vue'
 import ExpenseList from '@/pages/expense/ExpenseList.vue'
+import ExpenseDetail from '@/pages/expense/ExpenseDetail.vue'
 import ChangePassword from '@/pages/auth/ChangePassword.vue'
 import UserList from '@/pages/user/UserList.vue'
 import MappingList from '@/pages/master/MappingList.vue'
@@ -124,14 +126,16 @@ const routes: RouteRecordRaw[] = [
     path: '/attendancelist',
     component: DefaultLayout,
     children: [
-      { path: '', name: 'AttendanceList', component: AttendanceList }
+      { path: '', name: 'AttendanceList', component: AttendanceList },
+      { path: ':employeeId', name: 'AttendanceDetail', component: AttendanceDetail, props: true }
     ]
   },
   {
     path: '/expenselist',
     component: DefaultLayout,
     children: [
-      { path: '', name: 'ExpenseList', component: ExpenseList }
+      { path: '', name: 'ExpenseList', component: ExpenseList },
+      { path: ':employeeId', name: 'ExpenseDetail', component: ExpenseDetail, props: true }
     ]
   },
 ]

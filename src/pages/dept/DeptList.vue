@@ -73,7 +73,7 @@ const departmentTypeLabelMap = computed(() => {
 
 const headers = [
   { title: 'No', value: 'index', sortable: false },
-  { title: '承認ステータス', value: 'approvalStatus' },
+  { title: '承認ステータス', value: 'status' },
   { title: '運営状態', value: 'operationStatus' },
   { title: '部署コード', value: 'departmentCode' },
   { title: '部署名', value: 'departmentName' },

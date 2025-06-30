@@ -16,7 +16,7 @@ const deptRecords = ref<DeptRecord[]>([
     address: '東京都千代田区丸の内1-1-1',
     remarks: '法人営業を担当',
     operationStatus: '運営中',
-    approvalStatus: '承認済み'
+    status: '承認済み'
   },
   {
     departmentCode: '1010',
@@ -32,7 +32,7 @@ const deptRecords = ref<DeptRecord[]>([
     address: '東京都千代田区丸の内1-1-1',
     remarks: '',
     operationStatus: '運営中',
-    approvalStatus: '承認済み'
+    status: '承認済み'
   },
   {
     departmentCode: '2000',
@@ -48,7 +48,7 @@ const deptRecords = ref<DeptRecord[]>([
     address: '大阪府大阪市北区梅田1-1-1',
     remarks: '製品開発全般を統括',
     operationStatus: '運営中',
-    approvalStatus: '承認済み'
+    status: '承認済み'
   },
   {
     departmentCode: '2010',
@@ -64,7 +64,7 @@ const deptRecords = ref<DeptRecord[]>([
     address: '大阪府大阪市北区梅田1-1-1',
     remarks: '',
     operationStatus: '運営中',
-    approvalStatus: '承認済み'
+    status: '承認済み'
   },
   {
     departmentCode: '3000',
@@ -80,7 +80,7 @@ const deptRecords = ref<DeptRecord[]>([
     address: '東京都千代田区丸の内1-1-1',
     remarks: '人事・総務・経理を統括',
     operationStatus: '運営中',
-    approvalStatus: '承認済み'
+    status: '承認済み'
   },
   {
     departmentCode: '4000',
@@ -96,7 +96,7 @@ const deptRecords = ref<DeptRecord[]>([
     address: '東京都千代田区丸の内1-1-1',
     remarks: '',
     operationStatus: '運営中',
-    approvalStatus: '申請中'
+    status: '申請中'
   },
   {
     departmentCode: '5000',
@@ -112,7 +112,7 @@ const deptRecords = ref<DeptRecord[]>([
     address: '東京都千代田区丸の内1-1-1',
     remarks: 'DX推進プロジェクト',
     operationStatus: '運営中',
-    approvalStatus: '申請中'
+    status: '申請中'
   }
 ])
 

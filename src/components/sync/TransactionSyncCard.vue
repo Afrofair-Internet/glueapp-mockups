@@ -62,7 +62,6 @@ const props = defineProps<{ service: TransactionService }>()
 
 const emit = defineEmits<{
   (e: 'sync', id: string): void
-  (e: 'view-diff', id: string): void
   (e: 'reconcile', id: string): void
   (e: 'month-change', id: string, month: string): void
   (e: 'fetch', id: string, month: string): void

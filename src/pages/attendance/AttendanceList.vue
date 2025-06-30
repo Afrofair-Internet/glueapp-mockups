@@ -26,17 +26,28 @@
       height="400"
     >
       <template #item.actions="{ item }">
-        <v-icon small @click="showDetail(item)">mdi-information</v-icon>
+        <v-icon small @click="goToDetail(item)">mdi-information</v-icon>
       </template>
     </v-data-table>
   </v-container>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { ref, onMounted } from 'vue'
+import type { Attendance } from '@/types/attendance'
+import { useAttendance } from '@/composables/useAttendance'
+
+const router = useRouter()
 
 const selectedMonth = ref('2025年6月')
 const months = ['2025年6月', '2025年5月', '2025年4月']
+
+const { attendances, fetchAttendances } = useAttendance()
+
+onMounted(() => {
+  fetchAttendances()
+})
 
 const headers = [
   { title: 'ID', key: 'employeeId' },
@@ -49,31 +60,28 @@ const headers = [
   { title: '遅刻時間', key: 'lateTime' },
   { title: '早退時間', key: 'earlyLeaveTime' },
   { title: 'ステータス', key: 'status' },
-  { title: '操作', key: 'actions', sortable: false },
+  { title: '詳細', key: 'actions', sortable: false },
 ]
-
-const attendances = ref([
-  {
-    employeeId: '0001',
-    name: 'ユーザー01',
-    workDays: 20,
-    scheduledDays: 22,
-    totalHours: '144:00',
-    overtimeHours: '12:00',
-    lateHours: '2:00',
-    lateTime: '0:30',
-    earlyLeaveTime: '0:00',
-    status: '申請中',
-    department: '営業部',
-  },
-  // ... 他の行
-])
 
 const onSubmit = () => {
   console.log('送信ボタン押下')
 }
 
-const showDetail = (item: any) => {
-  console.log('詳細表示:', item)
+const goToDetail = (item: Attendance) => {
+  router.push({
+    name: 'AttendanceDetail',
+    params: { employeeId: item.employeeId },
+    query: {
+      month: selectedMonth.value,
+      workDays: item.workDays,
+      scheduledDays: item.scheduledDays,
+      totalHours: item.totalHours,
+      overtimeHours: item.overtimeHours,
+      lateHours: item.lateHours,
+      lateTime: item.lateTime,
+      earlyLeaveTime: item.earlyLeaveTime,
+      status: item.status
+    }
+  })
 }
 </script>

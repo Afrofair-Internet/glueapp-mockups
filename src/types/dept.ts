@@ -10,7 +10,7 @@ export type DeptRecord = {
   address: string
   remarks: string
   operationStatus: string
-  approvalStatus: string
+  status: string
   parentDepartment: string
   departmentType: string
 }

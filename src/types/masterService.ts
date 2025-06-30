@@ -8,5 +8,6 @@ export interface MasterService {
   requestCount: number
   rejectedCount: number
   approvedCount: number
+  syncErrorcount: number
   reconcileErrorCount: number
 }

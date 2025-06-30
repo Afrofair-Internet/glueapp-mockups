@@ -37,5 +37,5 @@ export type HrRecord = {
   address2Kana: string        // 住所2カナ
 
   //　承認ステータス
-  approvalStatus: string
+  status: string
 }

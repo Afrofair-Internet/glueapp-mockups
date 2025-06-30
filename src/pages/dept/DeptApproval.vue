@@ -68,7 +68,7 @@ const headers = [
   { title: '責任者', value: 'manager' },
   { title: '親部署コード', value: 'parentDepartment' },
   { title: '所在地', value: 'location' },
-  { title: '承認ステータス', value: 'approvalStatus' },
+  { title: '承認ステータス', value: 'status' },
   { title: '詳細', value: 'actions', sortable: false }
 ]
 
@@ -79,7 +79,7 @@ const selectedDetail = ref<DeptRecord | null>(null)
 const filteredRows = computed(() => {
   return deptRecords.value.filter(row => {
     return (
-      row.approvalStatus === '申請中' &&
+      row.status === '申請中' &&
       (!filters.value.departmentCode || row.departmentCode.includes(filters.value.departmentCode)) &&
       (!filters.value.departmentName || row.departmentName.includes(filters.value.departmentName)) &&
       (!filters.value.manager || row.manager.includes(filters.value.manager))
@@ -89,7 +89,7 @@ const filteredRows = computed(() => {
 
 function updateStatus(status: string) {
   deptRecords.value = deptRecords.value.map(row =>
-    selected.value.includes(row.departmentCode) ? { ...row, approvalStatus: status } : row
+    selected.value.includes(row.departmentCode) ? { ...row, status: status } : row
   )
   selected.value = []
 }

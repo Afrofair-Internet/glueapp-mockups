@@ -46,9 +46,13 @@ import { ref, computed } from 'vue'
 import HrDialog from '@/components/hr/HrDialog.vue'
 import type { HrRecord } from '../../types/hr'
 import { useHrRecords } from '@/composables/useHrRecords'
+import { useRoute } from 'vue-router'
 
 const search = ref('')
+const route = useRoute()
+const statusFilter = computed(() => route.query.status)
 
+// ステータスフィルタに応じた表示データを取得
 const { hrRecords } = useHrRecords()
 
 // ソート可能なヘッダー定義
@@ -60,7 +64,7 @@ const headers = [
   { title: '部署名', value: 'department', sortable: true },
   { title: '在籍状態', value: 'workStatus', sortable: true },
   { title: '入社年月日', value: 'hireDate', sortable: true },
-  { title: '承認ステータス', value: 'approvalStatus', sortable: false },
+  { title: '承認ステータス', value: 'status', sortable: false },
   { title: '詳細', value: 'actions', sortable: false },
 ]
 
@@ -80,7 +84,13 @@ const displayRecords = computed<HrDisplayRecord[]>(() =>
 
 const filteredRecords = computed(() => {
   const keyword = search.value.trim().toLowerCase()
-  if (!keyword) return displayRecords.value
+  let result = displayRecords.value
+  if (statusFilter.value) {
+  result = result.filter(r => r.status === statusFilter.value)
+  }
+
+  if (!keyword) return result
+
   return displayRecords.value.filter((r) => {
     return (
       r.employeeId?.toLowerCase().includes(keyword) ||

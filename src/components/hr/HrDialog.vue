@@ -47,7 +47,7 @@
           <v-text-field v-model="localRecord.address2" label="住所2（建物）" :readonly="isView" />
           <v-text-field v-model="localRecord.address1Kana" label="住所1（カナ）" :readonly="isView" />
           <v-text-field v-model="localRecord.address2Kana" label="住所2（カナ）" :readonly="isView" />
-          <v-text-field v-model="localRecord.approvalStatus" label="承認ステータス" readonly outlined />
+          <v-text-field v-model="localRecord.status" label="承認ステータス" readonly outlined />
         </v-form>
       </v-card-text>
 
@@ -92,7 +92,7 @@ const localRecord = ref<HrRecord>({
   lastName: '', firstName: '', lastNameKana: '', firstNameKana: '', fullNameNote: '', gender: '', birthDate: '',
   department: '', employeeId: '', employeeCode: '', employmentType: '', workStatus: '', hireDate: '', retireDate: '',
   phoneType: '', phoneNumber: '', faxNumber: '', email: '', addressType: '', zip: '', prefecture: '', city: '',
-  cityKana: '', address1: '', address2: '', address1Kana: '', address2Kana: '', approvalStatus: ''
+  cityKana: '', address1: '', address2: '', address1Kana: '', address2Kana: '', status: ''
 })
 
 watch(() => props.record, val => {
@@ -102,7 +102,7 @@ watch(() => props.record, val => {
       lastName: '', firstName: '', lastNameKana: '', firstNameKana: '', fullNameNote: '', gender: '', birthDate: '',
       department: '', employeeId: '', employeeCode: '', employmentType: '', workStatus: '', hireDate: '', retireDate: '',
       phoneType: '', phoneNumber: '', faxNumber: '', email: '', addressType: '', zip: '', prefecture: '', city: '',
-      cityKana: '', address1: '', address2: '', address1Kana: '', address2Kana: '', approvalStatus: ''
+      cityKana: '', address1: '', address2: '', address1Kana: '', address2Kana: '', status: ''
     }
   } else {
     localRecord.value = JSON.parse(JSON.stringify(val))

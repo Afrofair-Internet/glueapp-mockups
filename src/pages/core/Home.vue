@@ -18,7 +18,6 @@
               突合履歴
             </v-btn>
           </v-col>
-
           <v-col cols="auto">
             <v-btn
               variant="outlined"
@@ -38,12 +37,12 @@
 
     <!-- 人事マスタ同期 -->
     <h2 class="text-subtitle-1 font-weight-bold mb-2">人事マスタ同期状況</h2>
+    <!-- ステータスカード -->
+    <StatusSummaryCard />
     <v-row>
       <v-col cols="12" md="4" v-for="item in masterServices" :key="item.id">
         <MasterSyncCard
           :service="item"
-          @view-diff="viewDiff"
-          @reconcile="reconcile"
           @sync="sync"
         />
       </v-col>
@@ -55,8 +54,6 @@
       <v-col cols="12" md="4" v-for="item in transactionServices" :key="item.id">
         <TransactionSyncCard
           :service="item"
-          @view-diff="viewDiff"
-          @reconcile="reconcile"
           @sync="sync"
           @month-change="handleMonthChange"
           @fetch="fetchTransactionData"
@@ -74,6 +71,13 @@ import MasterSyncCard from '@/components/sync/MasterSyncCard.vue'
 import TransactionSyncCard from '@/components/sync/TransactionSyncCard.vue'
 import { useMasterServices } from '@/composables/useMasterServices'
 import { useTransactionServices } from '@/composables/useTransactionServices'
+import StatusSummaryCard from '@/components/status/StatusSummaryCard.vue'
+
+const router = useRouter()
+
+const { masterServices } = useMasterServices()
+const { transactionServices } = useTransactionServices()
+
 
 const goToReconcileHistory = () => {
   router.push({ name: 'ReconcileHistory' })
@@ -86,21 +90,6 @@ const goToSyncHistory = () => {
 const sync = (id: string) => {
   console.log('同期:', id)
   // ここに同期処理を実装する
-}
-
-const { masterServices } = useMasterServices()
-const { transactionServices } = useTransactionServices()
-console.log('transactionServices', transactionServices.value)
-
-const router = useRouter()
-
-// 再突合
-const reconcile = (id: string) => {
-  console.log('再突合:', id)
-}
-// 差分確認
-const viewDiff = (id: string) => {
-  router.push({ name: 'ReconcileDiff', params: { serviceId: id } })
 }
 // 対象月度変更
 const handleMonthChange = (id: string, month: string) => {
