@@ -69,7 +69,7 @@ export function useAttendance() {
         lateHours: '3:00',
         lateTime: '0:45',
         earlyLeaveTime: '1:00',
-        status: '否認',
+        status: '差戻し',
         department: '営業部',
       },
       {

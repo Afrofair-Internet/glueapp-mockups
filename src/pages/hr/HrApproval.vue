@@ -4,9 +4,8 @@
       <v-card-title class="d-flex justify-space-between align-center">
         <span>人事情報マスタ申請データ承認</span>
         <div>
-          <v-btn color="success" class="mr-2" @click="updateStatus('承認')">承認</v-btn>
-          <v-btn color="error" class="mr-2" @click="updateStatus('否認')">否認</v-btn>
-          <v-btn color="warning" @click="updateStatus('差戻し')">差戻し</v-btn>
+          <v-btn color="warning" class="mr-2" @click="updateStatus('差戻し')">差戻し</v-btn>
+          <v-btn color="success" @click="updateStatus('承認')">承認</v-btn>
         </div>
       </v-card-title>
 

@@ -14,7 +14,6 @@ import DeptList from '@/pages/dept/DeptList.vue'
 import DeptApproval from '@/pages/dept/DeptApproval.vue'
 import ReconcileHistory from '@/pages/sync/ReconcileHistory.vue'
 import SyncHistory from '@/pages/sync/SyncHistory.vue'
-import ReconcileDiff from '@/pages/sync/ReconcileDiff.vue'
 import CodeTypeList from '@/pages/master/CodeTypeList.vue'
 import CodeList from '@/pages/master/CodeList.vue'
 import AttendanceList from '@/pages/attendance/AttendanceList.vue'
@@ -98,7 +97,18 @@ const routes: RouteRecordRaw[] = [
     children: [
       { path: 'reconcile-history', name: 'ReconcileHistory', component: ReconcileHistory },
       { path: 'sync-history', name: 'SyncHistory', component: SyncHistory },
-      { path: 'diff/:serviceId', name: 'ReconcileDiff', component: ReconcileDiff }
+      {
+        path: 'sync-error/:serviceId',
+        name: 'SyncErrorDetail',
+        component: () => import('@/pages/sync/SyncErrorDetail.vue'),
+        props: true
+      },
+      {
+        path: 'reconcile-diff/:serviceId',
+        name: 'ReconcileDiffDetail',
+        component: () => import('@/pages/sync/ReconcileDiffDetail.vue'),
+        props: true
+      }
     ]
   },
   {

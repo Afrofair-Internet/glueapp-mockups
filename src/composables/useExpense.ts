@@ -49,7 +49,7 @@ export function useExpense() {
         totalAmount: 30100,
         submittedAt: '2025-06-19',
         approver: '上長B',
-        status: '否認'
+        status: '差戻し'
       },
       {
         employeeId: '0006',

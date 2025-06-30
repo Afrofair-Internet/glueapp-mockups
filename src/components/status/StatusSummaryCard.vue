@@ -36,7 +36,7 @@
     <v-col cols="12" md="3">
       <v-card class="pa-2" hover outlined @click="navigate('同期エラー')">
         <div class="d-flex align-center">
-          <v-icon color="info" class="mr-2">mdi-check-bold</v-icon>
+          <v-icon color="info" class="mr-2">mdi-alert-circle</v-icon>
           <div>
             <div class="text-caption">同期エラー</div>
             <div class="text-h6">{{ summary.syncErrorCount }} 件</div>

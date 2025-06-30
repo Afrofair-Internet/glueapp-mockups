@@ -68,7 +68,13 @@ const goToDetail = (item: Expense) => {
   router.push({
     name: 'ExpenseDetail',
     params: { employeeId: item.employeeId },
-    query: { month: selectedMonth.value }
+    query: {
+      month: selectedMonth.value,
+      itemCount: item.itemCount.toString(),
+      totalAmount: item.totalAmount.toString(),
+      submittedAt: item.submittedAt,
+      approvalStatus: item.status
+    }
   })
 }
 </script>

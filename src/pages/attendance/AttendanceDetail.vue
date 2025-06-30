@@ -5,14 +5,24 @@
         <h3 class="mb-1">対象年月：{{ selectedMonth }}</h3>
         <h3 class="mb-1">{{ userName }}</h3>
       </div>
-      <!-- 承認ボタン -->
-      <v-btn
-        color="success"
-        :disabled="summary.status === '承認済み'"
-        @click="handleApprove"
-      >
-        {{ summary.status === '承認済み' ? '承認済み' : '承認' }}
-      </v-btn>
+      <!-- 差戻し・承認ボタン -->
+      <div class="d-flex justify-end align-center mb-2">
+          <v-btn
+            color="error"
+            class="mr-2"
+            :disabled="summary.status === '承認済み'"
+            @click="handleReject"
+          >
+            差戻し
+          </v-btn>
+        <v-btn
+          color="success"
+          :disabled="summary.status !== '申請中'"
+          @click="handleApprove"
+        >
+          {{ summary.status === '承認済み' ? '承認済み' : '承認' }}
+        </v-btn>
+      </div>
     </div>
 
         <!-- 上部サマリ -->
@@ -122,7 +132,9 @@ const userName = computed(() => userMap[employeeId] || '不明')
 const handleApprove = () => {
   summary.value.status = '承認済み'
 }
-
+const handleReject = () => {
+  summary.value.status = '差戻し'
+}
 
 const goBack = () => {
   router.push({ name: 'AttendanceList' })

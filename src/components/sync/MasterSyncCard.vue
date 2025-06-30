@@ -1,5 +1,11 @@
 <template>
-  <v-card class="pa-4 d-flex flex-column justify-space-between" elevation="2" min-height="220px">
+  <v-card
+    class="pa-4 d-flex flex-column justify-space-between"
+    elevation="2"
+    min-height="220px"
+    :class="{ 'clickable': isClickable }"
+    @click="handleClick"
+  >
     <!-- タイトルとステータス -->
     <div class="d-flex align-center justify-space-between mb-2">
       <span class="text-subtitle-1 font-weight-medium">{{ service.label }}</span>
@@ -18,16 +24,15 @@
         {{ service.errorMessage }}
       </template>
     </div>
-
-    <!-- 送信ボタン -->
-
   </v-card>
 </template>
 
 <script setup lang="ts">
 import type { MasterService } from '@/types/masterService'
+import { useRouter } from 'vue-router'
 
 const { service } = defineProps<{ service: MasterService }>()
+const router = useRouter()
 
 const getStatusLabel = (s: MasterService) => {
   if (s.reconcileErrorCount && s.reconcileErrorCount > 0) {
@@ -48,14 +53,26 @@ const getStatusColor = (s: MasterService) => {
   }
   return 'blue'
 }
+
+const isClickable = (service.reconcileDiffCount ?? 0) > 0 || (service.reconcileErrorCount ?? 0) > 0
+
+const handleClick = () => {
+  if (!isClickable) return
+
+  if (service.reconcileErrorCount > 0) {
+    router.push({ name: 'SyncErrorDetail', params: { serviceId: service.id } })
+  } else if ((service.reconcileDiffCount ?? 0) > 0) {
+    router.push({ name: 'ReconcileDiffDetail', params: { serviceId: service.id } })
+  }
+}
 </script>
 
 <style scoped>
-.clickable-chip {
+.clickable {
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: box-shadow 0.2s;
 }
-.clickable-chip:hover {
-  background-color: #e3f2fd;
+.clickable:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
 </style>
