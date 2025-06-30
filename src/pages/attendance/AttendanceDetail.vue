@@ -57,7 +57,9 @@
       hide-default-footer
     />
 
-    <v-btn color="primary" class="mt-4" @click="goBack">一覧に戻る</v-btn>
+    <div class="text-right mt-4">
+      <v-btn color="primary" @click="goBack">一覧に戻る</v-btn>
+    </div>
   </v-container>
 </template>
 
