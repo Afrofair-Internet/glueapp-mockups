@@ -6,6 +6,7 @@ export function useDailyAttendance() {
   const dailyRecords = ref<DailyRecord[]>([])
 
   const fetchDailyRecords = async (employeeId: string, month: string) => {
+    console.log(`fetchDailyRecords: ${employeeId}, ${month}`)
     // 仮データを代入（後でAPI呼び出しに置換予定）
     dailyRecords.value = [
   { date: '2025-06-01', dayOfWeek: '日', clockIn: '', clockOut: '', workingHours: '0:00', overtime: '0:00', lateNight: '0:00', late: '0:00', earlyLeave: '0:00', status: '休日' },
